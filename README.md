@@ -1,4 +1,4 @@
-# Warhawk profile extractor
+# Warhawk leaderboard extractor
 
 Transforms Warhawk's leaderboard XML data into HTML.
 
