@@ -42,11 +42,11 @@ foreach ($leaderboardFiles as $fileName) {
 
 $columnNames = array("Rank", "Name", "Total Points", "Team Points", "Combat Points", "Bonus Points", "Time Played", "Kills", "Deaths", "Kill/Death Ratio", "Accuracy", "Wins", "Losses", "Wins/Losses", "Score/Min", "DM Points", "TDM Points", "CTF Points", "Zones Points", "Miles Walked", "Miles Driven", "Miles Flown", "Hero Points", "Collection Points");
 
-$tableColumns = "<thead>\n<tr>\n";
+$tableColumns = "<thead>" . PHP_EOL . "<tr>" . PHP_EOL;
 foreach ($columnNames as $key => $columnName) {
 	$tableColumns .= "<th scope=\"col\">" . $svml->GRID->COLUMNS->COLUMN[$key] . ":<br />" . $columnName . "</th>" . PHP_EOL;
 }
-$tableColumns .= "</tr>\n</thead>";
+$tableColumns .= "</tr>" . PHP_EOL . "</thead>";
 
 $columnFileNames = array();
 foreach ($columnNames as $key => $columnName) {
@@ -56,65 +56,65 @@ foreach ($columnNames as $key => $columnName) {
 	$columnFileNames[$key] = strtolower($columnFileNames[$key]);
 }
 
-echo "\n<ol>\n";
+echo PHP_EOL . "<ol>" . PHP_EOL;
 
 foreach ($sortedFiles as $key => $currentColumn) {
 	$pageTitle = $columnNames[($key + 2)] . " leaderboards stats";
 	$pageDescription = $pageTitle . " from &lt; 24 hours before Warhawk's online shutdown.";
 	$htmlFile = $columnFileNames[($key + 2)] . ".html";
-	$htmlOutput = "<!DOCTYPE html>\n";
-	$htmlOutput .= "<html lang=\"en\">\n";
-	$htmlOutput .= "<head>\n";
+	$htmlOutput = "<!DOCTYPE html>" . PHP_EOL;
+	$htmlOutput .= "<html lang=\"en\">" . PHP_EOL;
+	$htmlOutput .= "<head>" . PHP_EOL;
 	$htmlOutput .= "<title>" . $pageTitle . " - Warhawk PS3</title>";
-	$htmlOutput .= "<link href=\"../../theme.css\" rel=\"stylesheet\" />\n";
-	$htmlOutput .= "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n";
-	$htmlOutput .= "<meta name=\"title\" content=\"" . $pageTitle . "\" />\n";
-	$htmlOutput .= "<meta name=\"description\" content=\"" . $pageTitle . " from &lt; 24 hours before Warhawk's online shutdown.\" />\n";
-	$htmlOutput .= "<meta property=\"og:type\" content=\"website\" />\n";
-	$htmlOutput .= "<meta property=\"og:url\" content=\"https://warhawk-ps3.github.io/stats/leaderboards/" . $htmlFile . "\" />\n";
-	$htmlOutput .= "<meta property=\"og:title\" content=\"" . $pageTitle . "\" />\n";
-	$htmlOutput .= "<meta property=\"og:description\" content=\"" . $pageTitle . " from &lt; 24 hours before Warhawk's online shutdown.\" />\n";
-	$htmlOutput .= "<meta property=\"og:site_name\" content=\"Warhawk (PS3)\" />\n";
-	$htmlOutput .= "<meta property=\"twitter:card\" content=\"summary\" />\n";
-	$htmlOutput .= "<meta property=\"twitter:url\" content=\"https://warhawk-ps3.github.io/stats/leaderboards/" . $htmlFile . "\" />\n";
-	$htmlOutput .= "<meta property=\"twitter:title\" content=\"" . $pageTitle . "\" />\n";
-	$htmlOutput .= "<meta property=\"twitter:description\" content=\"" . $pageTitle . " from &lt; 24 hours before Warhawk's online shutdown.\" />\n";
-	$htmlOutput .= "</head>\n";
-	$htmlOutput .= "<body>\n";
-	$htmlOutput .= "<main>\n";
-	$htmlOutput .= "<h1>" . $pageTitle . "</h1>\n";
-	$htmlOutput .= "<p>" . $pageDescription . "</p>\n";
-	$htmlOutput .= "<table>\n";
-	$htmlOutput .= $tableColumns . "\n";
+	$htmlOutput .= "<link href=\"../../theme.css\" rel=\"stylesheet\" />" . PHP_EOL;
+	$htmlOutput .= "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />" . PHP_EOL;
+	$htmlOutput .= "<meta name=\"title\" content=\"" . $pageTitle . "\" />" . PHP_EOL;
+	$htmlOutput .= "<meta name=\"description\" content=\"" . $pageTitle . " from &lt; 24 hours before Warhawk's online shutdown.\" />" . PHP_EOL;
+	$htmlOutput .= "<meta property=\"og:type\" content=\"website\" />" . PHP_EOL;
+	$htmlOutput .= "<meta property=\"og:url\" content=\"https://warhawk-ps3.github.io/stats/leaderboards/" . $htmlFile . "\" />" . PHP_EOL;
+	$htmlOutput .= "<meta property=\"og:title\" content=\"" . $pageTitle . "\" />" . PHP_EOL;
+	$htmlOutput .= "<meta property=\"og:description\" content=\"" . $pageTitle . " from &lt; 24 hours before Warhawk's online shutdown.\" />" . PHP_EOL;
+	$htmlOutput .= "<meta property=\"og:site_name\" content=\"Warhawk (PS3)\" />" . PHP_EOL;
+	$htmlOutput .= "<meta property=\"twitter:card\" content=\"summary\" />" . PHP_EOL;
+	$htmlOutput .= "<meta property=\"twitter:url\" content=\"https://warhawk-ps3.github.io/stats/leaderboards/" . $htmlFile . "\" />" . PHP_EOL;
+	$htmlOutput .= "<meta property=\"twitter:title\" content=\"" . $pageTitle . "\" />" . PHP_EOL;
+	$htmlOutput .= "<meta property=\"twitter:description\" content=\"" . $pageTitle . " from &lt; 24 hours before Warhawk's online shutdown.\" />" . PHP_EOL;
+	$htmlOutput .= "</head>" . PHP_EOL;
+	$htmlOutput .= "<body>" . PHP_EOL;
+	$htmlOutput .= "<main>" . PHP_EOL;
+	$htmlOutput .= "<h1>" . $pageTitle . "</h1>" . PHP_EOL;
+	$htmlOutput .= "<p>" . $pageDescription . "</p>" . PHP_EOL;
+	$htmlOutput .= "<table>" . PHP_EOL;
+	$htmlOutput .= $tableColumns . "" . PHP_EOL;
 	
 	foreach ($currentColumn as $fileName) {
 		$xmlstr = file_get_contents ( $fileName );
 		$xmlstr = str_replace("borderClass=\"BORDERGRID1\"", "", $xmlstr);
 		$svml = new SimpleXMLElement($xmlstr);
 		
-		$htmlOutput .= "<!--/WARHAWK_SVML/stats/" . str_replace('%3f', '?', basename($fileName)) . "-->\n";
+		$htmlOutput .= "<!--/WARHAWK_SVML/stats/" . str_replace('%3f', '?', basename($fileName)) . "-->" . PHP_EOL;
 		
-		$htmlOutput .= "<tbody>\n";
+		$htmlOutput .= "<tbody>" . PHP_EOL;
 		foreach ($svml->GRID->ROWS->ROW as $row) {
-			$htmlOutput .= "<tr>\n";
+			$htmlOutput .= "<tr>" . PHP_EOL;
 			foreach ($row->CELL as $cell) {
-				$htmlOutput .= "<td>" . $cell . "</td>\n";
+				$htmlOutput .= "<td>" . $cell . "</td>" . PHP_EOL;
 			}
-			$htmlOutput .= "</tr>\n";
+			$htmlOutput .= "</tr>" . PHP_EOL;
 		}
-		$htmlOutput .= "</tbody>\n";
+		$htmlOutput .= "</tbody>" . PHP_EOL;
 	}
-	$htmlOutput .= "</table>\n";
-	$htmlOutput .= "</main>\n";
-	$htmlOutput .= "</body>\n";
-	$htmlOutput .= "</html>\n";
+	$htmlOutput .= "</table>" . PHP_EOL;
+	$htmlOutput .= "</main>" . PHP_EOL;
+	$htmlOutput .= "</body>" . PHP_EOL;
+	$htmlOutput .= "</html>" . PHP_EOL;
 	
 	file_put_contents($outputDir . $columnFileNames[($key + 2)] . ".html", $htmlOutput);
 	
-	echo "<li><a href=\"" . $outputDir . $htmlFile . "\">" . $columnNames[($key + 2)] . "</a></li>\n";
+	echo "<li><a href=\"" . $outputDir . $htmlFile . "\">" . $columnNames[($key + 2)] . "</a></li>" . PHP_EOL;
 }
 
-echo "</ol>\n";
+echo "</ol>" . PHP_EOL;
 ?>
 </pre>
 </body>
