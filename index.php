@@ -26,9 +26,9 @@ $svml = new SimpleXMLElement($xmlstr);
 $sortedFiles = array();
 
 foreach ($leaderboardFiles as $fileName) {
-	
+
 	parse_str(substr($fileName, 84), $output);
-	
+
 	if (!isset($output['sortCol']) && !isset($output['start'])) {
 		$output['start'] = 0;
 		$output['sortCol'] = 0;
@@ -36,7 +36,7 @@ foreach ($leaderboardFiles as $fileName) {
 	else if (!isset($output['start'])) {
 		$output['start'] = 0;
 	}
-	
+
 	$sortedFiles[ $output['sortCol'] ][ $output['start'] / 12 ] = $fileName;
 }
 
@@ -86,14 +86,14 @@ foreach ($sortedFiles as $key => $currentColumn) {
 	$htmlOutput .= "<p>" . $pageDescription . "</p>" . PHP_EOL;
 	$htmlOutput .= "<table>" . PHP_EOL;
 	$htmlOutput .= $tableColumns . "" . PHP_EOL;
-	
+
 	foreach ($currentColumn as $fileName) {
 		$xmlstr = file_get_contents ( $fileName );
 		$xmlstr = str_replace("borderClass=\"BORDERGRID1\"", "", $xmlstr);
 		$svml = new SimpleXMLElement($xmlstr);
-		
+
 		$htmlOutput .= "<!--/WARHAWK_SVML/stats/" . str_replace('%3f', '?', basename($fileName)) . "-->" . PHP_EOL;
-		
+
 		$htmlOutput .= "<tbody>" . PHP_EOL;
 		foreach ($svml->GRID->ROWS->ROW as $row) {
 			$htmlOutput .= "<tr>" . PHP_EOL;
@@ -108,9 +108,9 @@ foreach ($sortedFiles as $key => $currentColumn) {
 	$htmlOutput .= "</main>" . PHP_EOL;
 	$htmlOutput .= "</body>" . PHP_EOL;
 	$htmlOutput .= "</html>" . PHP_EOL;
-	
+
 	file_put_contents($outputDir . $columnFileNames[($key + 2)] . ".html", $htmlOutput);
-	
+
 	echo "<li><a href=\"" . $outputDir . $htmlFile . "\">" . $columnNames[($key + 2)] . "</a></li>" . PHP_EOL;
 }
 
